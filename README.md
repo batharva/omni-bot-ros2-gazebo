@@ -131,4 +131,4 @@ omni_ws/
 
 ## License
 
-MIT (or update as you prefer)
+MIT 

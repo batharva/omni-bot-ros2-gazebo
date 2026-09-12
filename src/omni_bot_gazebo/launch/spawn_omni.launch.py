@@ -33,13 +33,13 @@ def generate_launch_description():
         output='screen'
     )
 
-    rviz_node = Node(
-        package='rviz2',
-        executable='rviz2',
-        arguments=['-d', os.path.join(
-            get_package_share_directory('omni_bot_gazebo'), 'rviz', 'omni_bot.rviz')],
-        output='screen'
-    )
+    # rviz_node = Node(
+    #     package='rviz2',
+    #     executable='rviz2',
+    #     arguments=['-d', os.path.join(
+    #         get_package_share_directory('omni_bot_gazebo'), 'rviz', 'omni_bot.rviz')],
+    #     output='screen'
+    # )
 
     # FIXED: rviz_node was missing from this list, so it never actually launched
-    return LaunchDescription([gazebo, robot_state_publisher, spawn_entity, rviz_node])
+    return LaunchDescription([gazebo, robot_state_publisher, spawn_entity])

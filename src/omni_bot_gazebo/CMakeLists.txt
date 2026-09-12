@@ -10,12 +10,15 @@ install(DIRECTORY
   launch
   worlds
   rviz
+  models
   DESTINATION share/${PROJECT_NAME}/
 )
 
 install(PROGRAMS
   scripts/omni_controller.py
+  scripts/omni_gui.py
   DESTINATION lib/${PROJECT_NAME}
 )
+
 
 ament_package()

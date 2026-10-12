@@ -1,70 +1,207 @@
 Panels:
   - Class: rviz_common/Displays
+    Help Height: 138
     Name: Displays
+    Property Tree Widget:
+      Expanded:
+        - /Global Options1
+        - /TF1
+        - /TF1/Frames1
+        - /Status1
+      Splitter Ratio: 0.5
+    Tree Height: 600
   - Class: rviz_common/Views
+    Expanded:
+      - /Current View1
     Name: Views
+    Splitter Ratio: 0.5
+
 Visualization Manager:
   Class: ""
-  Displays:
-    - Class: rviz_default_plugins/Grid
-      Name: Grid
-      Enabled: true
-      Cell Size: 1
-      Color: 160; 160; 164
-      Plane: XY
-      Plane Cell Count: 10
-      Reference Frame: <Fixed Frame>
-    - Class: rviz_default_plugins/Marker
-      Name: Marker
-      Enabled: true
-      Topic:
-        Value: /visualization_marker
-        Depth: 5
-        Durability Policy: Volatile
-        History Policy: Keep Last
-        Reliability Policy: Reliable
-    - Class: rviz_default_plugins/Odometry
-      Name: Odometry
-      Enabled: true
-      Topic:
-        Value: /omni_bot/odom
-        Depth: 5
-        Durability Policy: Volatile
-        History Policy: Keep Last
-        Reliability Policy: Reliable
-      Position Tolerance: 0.05
-      Angle Tolerance: 0.05
-      Keep: 100
-      Shape:
-        Value: Arrow
-      Arrow Color: 255; 25; 0
-    - Class: rviz_default_plugins/TF
-      Name: TF
-      Enabled: true
-      Show Names: true
-      Show Axes: true
-      Show Arrows: false
+  Enabled: true
+  Name: root
+
   Global Options:
     Background Color: 48; 48; 48
     Fixed Frame: odom
     Frame Rate: 30
+
   Tools:
+    - Class: rviz_default_plugins/Interact
+      Hide Inactive Objects: true
     - Class: rviz_default_plugins/MoveCamera
     - Class: rviz_default_plugins/Select
-    - Class: rviz_default_plugins/Interact
-  Value: true
-  Views:
-    Current:
-      Class: rviz_default_plugins/Orbit
-      Distance: 6
-      Focal Point:
+    - Class: rviz_default_plugins/Measure
+      Line color: 128; 128; 0
+
+  Displays:
+    - Alpha: 0.5
+      Cell Size: 1
+      Class: rviz_default_plugins/Grid
+      Color: 160; 160; 164
+      Enabled: true
+      Line Style:
+        Line Width: 0.03
+        Value: Lines
+      Name: Grid
+      Normal Cell Count: 0
+      Offset:
         X: 0
         Y: 0
         Z: 0
-      Pitch: 0.6
-      Yaw: 0.8
+      Plane: XY
+      Plane Cell Count: 20
+      Reference Frame: odom
+      Value: true
+
+    # Shows bot_debug_frame (bot's actual body frame), target_debug_frame
+    # (target's frame, aligned to the A->B line) and start_debug_frame,
+    # plus any real robot TF tree, all as colored axis triads.
+    - Class: rviz_default_plugins/TF
+      Enabled: true
+      Frame Timeout: 15
+      Frames:
+        All Enabled: true
+      Marker Alpha: 1
+      Marker Scale: 0.4
+      Name: TF
+      Show Arrows: true
+      Show Axes: true
+      Show Names: true
+      Tree:
+        {}
+      Update Interval: 0
+      Value: true
+
+    # Target pole + confidence-circle marker (published on /visualization_marker)
+    - Class: rviz_default_plugins/Marker
+      Enabled: true
+      Name: Target Marker
+      Namespaces:
+        target: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /visualization_marker
+      Value: true
+
+    # A->B line, deviation connector, and text readout
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: Alignment Markers
+      Namespaces:
+        alignment: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /omni_bot/viz_markers
+      Value: true
+
+    # The robot's actual (noisy) traveled trajectory
+    - Alpha: 1
+      Buffer Length: 1
+      Class: rviz_default_plugins/Path
+      Color: 25; 170; 255
+      Enabled: true
+      Head Diameter: 0.15
+      Head Length: 0.1
+      Length: 0.2
+      Line Style: Lines
+      Line Width: 0.03
+      Name: Actual Path
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Pose Color: 255; 85; 255
+      Pose Style: None
+      Radius: 0.03
+      Shaft Diameter: 0.05
+      Shaft Length: 0.1
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /omni_bot/actual_path
+      Value: true
+
+    # Raw odometry (position + velocity arrows), off by default to reduce clutter
+    - Angle Tolerance: 0.1
+      Class: rviz_default_plugins/Odometry
+      Covariance:
+        Orientation:
+          Alpha: 0.5
+          Color: 255; 255; 127
+          Color Style: Unique
+          Frame: Local
+          Offset: 1
+          Scale: 1
+          Value: true
+        Position:
+          Alpha: 0.3
+          Color: 204; 51; 204
+          Scale: 1
+          Value: true
+        Value: true
+      Enabled: false
+      Keep: 100
+      Name: Odometry
+      Position Tolerance: 0.1
+      Shape:
+        Alpha: 1
+        Axes Length: 0.3
+        Axes Radius: 0.02
+        Color: 255; 25; 0
+        Head Length: 0.15
+        Head Radius: 0.1
+        Shaft Length: 0.2
+        Shaft Radius: 0.03
+        Value: Arrow
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /omni_bot/odom
+      Value: false
+
+  Enabled: true
+  Value: true
+
+  Views:
+    Current:
+      Class: rviz_default_plugins/TopDownOrtho
+      Enable Stereo Rendering:
+        Stereo Eye Separation: 0.06
+        Stereo Focal Distance: 1
+        Swap Stereo Eyes: false
+        Value: false
+      Invert Z Axis: false
+      Name: Current View
+      Near Clip Distance: 0.01
+      Scale: 120
+      Target Frame: odom
+      X: 0
+      Y: 0
+    Saved: ~
+
 Window Geometry:
-  Height: 900
-  Width: 1400
+  Displays:
+    collapsed: false
+  Height: 1000
+  Hide Left Dock: false
+  Hide Right Dock: false
+  Views:
+    collapsed: false
+  Width: 1500
   X: 60
   Y: 60

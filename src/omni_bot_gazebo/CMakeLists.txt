@@ -16,7 +16,6 @@ install(DIRECTORY
 
 install(PROGRAMS
   scripts/omni_controller.py
-  scripts/omni_gui.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

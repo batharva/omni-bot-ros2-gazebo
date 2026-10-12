@@ -5,6 +5,10 @@
   <xacro:property name="base_height" value="0.235"/>
   <xacro:property name="ground_clearance" value="0.02"/>
 
+  <!-- Heading marker ("face") dimensions -->
+  <xacro:property name="face_length" value="0.10"/>
+  <xacro:property name="face_width" value="0.03"/>
+
   <xacro:property name="wheel_radius" value="0.05"/>
   <xacro:property name="wheel_width" value="0.04"/>
   <xacro:property name="wheel_offset" value="0.16"/>
@@ -30,6 +34,31 @@
       <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.02"/>
     </inertial>
   </link>
+
+  <!-- Heading marker ("face"): yellow stick poking out of the robot's +x (front) side.
+       Visual only, no collision, so it never affects motion. -->
+  <link name="face_link">
+    <visual>
+      <geometry><box size="${face_length} ${face_width} ${face_width}"/></geometry>
+      <material name="yellow"><color rgba="1 0.8 0 1"/></material>
+    </visual>
+    <inertial>
+      <mass value="0.01"/>
+      <inertia ixx="0.000001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.000001"/>
+    </inertial>
+  </link>
+
+  <joint name="face_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="face_link"/>
+    <!-- centre it so ~0.09 m sticks out past the base edge (0.01 m overlaps into the body) -->
+    <origin xyz="${base_radius + face_length/2 - 0.01} 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Gazebo Classic often ignores URDF colours, so set it explicitly -->
+  <gazebo reference="face_link">
+    <material>Gazebo/Yellow</material>
+  </gazebo>
 
   <xacro:macro name="omni_wheel" params="prefix angle_deg">
     <link name="${prefix}_wheel">
